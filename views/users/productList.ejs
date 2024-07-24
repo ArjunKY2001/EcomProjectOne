@@ -1,0 +1,108 @@
+<%- include("header")-%>
+        <section class="
+        content-main">
+            <div class="content-header">
+                <div>
+                    <h2 class="content-title card-title">Products</h2>
+                    
+                </div>
+               
+            </div>
+            <div class="card mb-4">
+                <header class="card-header">
+                    <form class="searchform" action="/user/home" method="POST" >
+                        <div class="input-group">
+                            
+                            <input list="search_terms" type="text" class="form-control" placeholder="Search " name="searchTerm" id="search-term">
+                            <button class="btn btn-light bg" type="submit"> <i class="material-icons md-search"></i></button>
+                            
+                            <select onchange="sortByPrice()" class="form-select" id="sort-items">
+                                <option value="showAll">Sort By Price</option>
+                                <option value="ascending">Price: Low to High</option>
+                                <option value="descending">Price: High to Low</option>
+                            </select>
+                            <select onchange="categoryfilter()" class="form-select" id="select-category">
+                                <option>All Categories</option>
+                                <%for(let i=0;i<Category.length;i++){ %>
+                                    <option ><%=Category[i].name %></option>
+                                    <% } %>
+                            </select>
+                            
+                            		
+                        </div>
+                        
+                    </form>
+                </header> <!-- card-header end// -->
+                <div class="card-body">
+                    <div class="row gx-3 row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 row-cols-xxl-5">
+                        <% for(let i=0;i<product.length;i++){ %>
+                        <div class="col">
+                            <div class="card card-product-grid">
+                                <a href="#" class="img-wrap"> <img src="/<%=product[i].images[0]%>" alt="Product"> </a>
+                                <div class="info-wrap">
+                                    <a href="#" class="title text-truncate"><%= product[i].name%></a>
+                                    <div class="price mb-2">$<%= product[i].price%></div> <!-- price.// -->
+                                    <a href="/user/productDetails?prctId=<%= product[i]._id %>&userId=<%= user._id %>" class="btn btn-sm font-sm btn-light rounded">
+                                        <i class="material-icons "></i> Details
+                                    </a>
+                                </div>
+                            </div> 
+                        </div>
+                        <% } %>
+                    </div> 
+                </div> 
+            </div> 
+            
+            <div class="pagination-area mt-30 mb-50">
+                <nav aria-label="Page navigation example">
+                    <!-- <ul class="pagination justify-content-start">
+                        <li class="page-item active"><a class="page-link" href="#">01</a></li>
+                        <li class="page-item"><a class="page-link" href="#">02</a></li>
+                        <li class="page-item"><a class="page-link" href="#">03</a></li>
+                        <li class="page-item"><a class="page-link dot" href="#">...</a></li>
+                        <li class="page-item"><a class="page-link" href="#">16</a></li>
+                        <li class="page-item"><a class="page-link" href="#"><i class="material-icons md-chevron_right"></i></a></li>
+                    </ul> -->
+                </nav>
+            </div>
+        </section> <!-- content-main end// -->
+        <footer class="main-footer font-xs">
+        </footer>
+    </main>
+    <script>
+        function sortByPrice() {
+				const selectedOption = document.getElementById("sort-items").value;
+				window.location.href =`/user/sortedItems?selectedOption=${selectedOption}`
+				
+		}
+        function categoryfilter(){
+            const filtered=document.getElementById("select-category").value
+            window.location.href=`/user/filtered?filterditems=${filtered}`
+        }
+    </script>
+    <script>
+        // document.getElementById('select-category').addEventListener('change', function () {
+        //     const selectedCatId = this.value; 
+        //     fetch(`/user/searchCat?selectedCatId=${selectedCatId}`, {
+        //         method: 'GET',
+        //         headers: {
+        //             'Content-Type': 'application/json'
+        //         },
+        //     }).then(data=>{
+        //         console.log(data);
+        //     }).setTimeout(()=>{
+        //      window.location.reload(); 
+        //      },100)
+//        })
+    </script>
+    <script src="/static/adminAssets/js/vendors/jquery-3.6.0.min.js"></script>
+    <script src="/static/adminAssets/js/vendors/bootstrap.bundle.min.js"></script>
+    <script src="/static/adminAssets/js/vendors/select2.min.js"></script>
+    <script src="/static/adminAssets/js/vendors/perfect-scrollbar.js"></script>
+    <script src="/static/adminAssets/js/vendors/jquery.fullscreen.min.js"></script>
+    <!-- Main Script -->
+    <script src="/static/adminAssets/js/main.js" type="text/javascript"></script>
+   
+</body>
+
+</html>

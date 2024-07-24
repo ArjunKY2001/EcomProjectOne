@@ -1,0 +1,65 @@
+<% include("../layouts/header.ejs") %>
+
+<style>
+  body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+  }
+
+  h1, h4 {
+      color: #333;
+      text-align: center;
+  }
+
+  form {
+      width: 50%;
+      margin: 20px auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+  }
+
+  input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+  }
+
+  input[type="submit"] {
+      background-color: #2072b9;
+      color: white;
+      cursor: pointer;
+      border: none;
+      border-radius: 4px;
+  }
+</style>
+
+<h1>Login</h1>
+<%
+  if(typeof message !== 'undefined'){
+    %>
+    <h4><%= message %></h4>
+    <%
+  } 
+%>
+<form action="/login" method="post">
+    <input type="email" name="email" placeholder="Enter email">
+    <br><br>
+    <input type="password" name="password" placeholder="Enter password">
+    <br><br>
+    <input type="submit" value="Login">   
+</form>
+<a href="/forget">forget password</a>
+<%/*<div class="text-muted text-center">Already have an account?</div>*/%>
+<a href="#">Sign in now</a>
+
+
+
+<% include("../layouts/footer.ejs") %>

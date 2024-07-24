@@ -1,0 +1,123 @@
+<% include('../layouts/header.ejs')%>
+
+<style>
+  body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+  }
+
+  h1 {
+      color: #333;
+      text-align: center;
+  }
+
+  form {
+      width: 50%;
+      margin: 20px auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+  }
+
+  input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+  }
+
+  input[type="submit"] {
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+  }
+
+  p {
+      color: rgb(128, 19, 0);
+      text-align: center;
+  }
+
+  a {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #333;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+  }
+</style>
+
+<h1>Add New user</h1>
+<form action="" method="post"  onsubmit="return validateForm()" >
+    <input type="text" name="name"  id="name" placeholder="Enter Name" required>
+    <br><br>
+    <input type="email" name="email" id="email" placeholder="Enter email" required>
+    <br><br>
+    <input type="text" name="mno" id="mno" placeholder="Enter Mobile" required>
+    <br><br>
+    <input type="password" name="password" id="password" placeholder="Enter password" required>
+    <br><br>
+    <input type="submit" value="Add user">
+    <br><br>
+</form>
+
+
+
+<% 
+  if(typeof message!== "undefined"){
+    %>
+    <p style="color:rgb(128, 19, 0)"><%= message %></p>
+    <%
+  }
+
+
+%>
+
+<script>
+    function validateForm() {
+      console.log("one");
+      var name = document.getElementById("name").value;
+      var email = document.getElementById("email").value;
+      var mno = document.getElementById("mno").value;
+      var password = document.getElementById("password").value;
+
+      // Perform your validation using regular expressions
+      // if (name === "") {   
+      //     alert("Name must be filled out");
+      //     return false;
+      // }
+
+      if (!/^[a-zA-Z ]{3,}$/.test(name)) {
+    alert("Name must be at least 3 characters, including alphabets and spaces, without leading or trailing spaces");
+    return false;
+}
+
+      // Email validation using regex
+      var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+          alert("Invalid email format");
+          return false;
+      }
+
+      // Mobile number validation using regex (assuming a 10-digit number)
+      var mobileRegex = /^\d{10}$/;
+    if (!mobileRegex.test(mno.replace(/\s/g, ''))) {
+        alert("Invalid mobile number");
+        return false;
+    }
+
+      // Add more validation as needed for the password
+
+      return true;
+    }
+  </script>
+
+
+<a href="/admin/dashboard/">Go Back</a>
+<% include('../layouts/footer.ejs')%>

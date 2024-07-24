@@ -1,0 +1,294 @@
+
+    
+   <%- include("header")-%>
+        <section class="content-main">
+            <div class="row">
+                <div class="col-9">
+                    <div class="content-header">
+                        <h2 class="content-title">Add Products</h2>                       
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h4>Product details</h4>
+                        </div>
+                        <div class="card-body">
+                            <form action="" method="post"  enctype="multipart/form-data" onsubmit="validateForm()"  >
+                                <div class="mb-4">
+                                    <label for="product_name" class="form-label">Product name</label>
+                                    <input type="text" placeholder="Type here" class="form-control" name="Name" id="name1" onkeyup="validateName()">
+                                    <span id="name-error" style="font-size: 14px; margin-top: -20px"></span>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label">Description</label>
+                                    <textarea placeholder="Type here" class="form-control" rows="4"  name="Description"  id="description" onkeyup="validateDescription()"></textarea>
+                                    <span id="disc-error" style="font-size: 14px; margin-top: -20px"></span>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-4">
+                                        <div class="mb-4">
+                                            <label class="form-label">Price</label>
+                                            <div class="row gx-2">
+                                                <input placeholder="$" type="text"  id="price" name="Price"  class="form-control" onkeyup="validatePrice()">
+                                                <span id="Price-error" style="font-size: 14px; margin-top: -20px"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="mb-4">
+                                          
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                       <div class="mb-4">
+                                            <label class="form-label">Stock</label>
+                                            <input  type="text" id="Stock"  name="Stock"  class="form-control" onkeyup="validateStock()">
+                                            <span id="Stock-error" style="font-size: 14px; margin-top: -20px"></span>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                                <div class="mb-4">
+                                    <label class="form-label">Category</label>
+                                    <select name="category" class="form-select">
+                                        <%                                          
+                                        for(let i=0;i<category.length;i++){                                           
+                                       %>
+                                        <option value="<%= category[i]._id %>">
+                                            <%= category[i].name  %></option>
+                                        <%
+                                       }
+                                       %>
+                                    </select>
+                                </div>
+                                <div class="input-upload" id="image-preview" ></div>
+                                <div id="cropper-container"></div>
+                                <div>
+                                    <button type="button" class="btn btn-md rounded font-sm hover-up mb-4" onclick="cropAndUpload()">Crop and Upload</button>
+                                  </div>
+                                
+
+                                <div class="input-upload" id="image-previeww" >
+                                    <input id="file-input" name= "images"  class="form-control" type="file" multiple  onchange="previewAndSaveImages(event)" ></div>
+                                
+                                <div>
+                                    <button type="submit" class="btn btn-md rounded font-sm hover-up mb-4" >Publish</button>
+                                </div>
+                                
+   
+                            </form>
+                        </div>
+                    </div> 
+                </div>
+                
+    <script>
+        function validateForm() {
+          //console.log("onchange="previewAndSaveImages(event)");
+          var name = document.getElementById("name1").value;
+          var description = document.getElementById("description").value;
+          var price=document.getElementById("price").value;
+        //   var discount = document.getElementById("discount").value;
+          var Stock = document.getElementById("Stock").value;
+    
+         // Perform your validation using regular expressions
+          if (name === "") {   
+              alert("Name must be filled out");
+              return false;
+          }
+    
+          if (description === "") {   
+              alert("description must be filled out");
+              return false;
+          }
+    
+         
+          if (price === "") {   
+              alert("price  must be filled out");
+              return false;
+          }
+
+       
+         
+    
+            if (Stock === "") {   
+              alert("Name must be filled out");
+              return false;
+          }
+    
+          return true;
+        }
+    </script>
+    <script>
+     function validateName() {
+      var name = document.getElementById("name1").value.trim();
+      var nameError = document.getElementById("name-error"); 
+      if (name.length === 0) {
+        nameError.innerHTML = "Product name is required";
+        nameError.style.color = "red";
+        return false;
+      }
+      nameError.innerHTML = "Valid";
+      nameError.style.color = "green";
+      return true;
+    }
+
+    function validatedescription() {
+      var name = document.getElementById("description").value.trim();
+      var disError = document.getElementById("dis-error"); 
+      if (name.length === 0) {
+        disError.innerHTML = "description name is required";
+        disError.style.color = "red";
+        return false;
+      }
+      disError.innerHTML = "Valid";
+      disError.style.color = "green";
+      return true;
+    }
+    
+    function validatePrice() {
+      var name = document.getElementById("price").value.trim();
+      var priError = document.getElementById("Price-error"); 
+      if (name.length === 0) {
+        priError.innerHTML = "price name is required";
+        priError.style.color = "red";
+        return false;
+      }else if(name<=0){
+        priError.innerHTML = "price must be in real value";
+        priError.style.color = "red";
+        return false;
+      }
+      priError.innerHTML = "Valid";
+      priError.style.color = "green";
+      return true;
+    }
+    
+    function validateStock() {
+      var name = document.getElementById("Stock").value.trim();
+      var StockError = document.getElementById("Stock-error"); 
+      if (name.length === 0) {
+        StockError.innerHTML = "Stock number is required";
+        StockError.style.color = "red";
+        return false;
+      }else if(name<=0){
+        StockError.innerHTML = "Stock not be negative";
+        StockError.style.color = "red";
+        return false;
+      }else if (/^[+-]*$/.test(name)) {  // Checks if input contains only signs (+/-)
+       StockError.innerHTML = "Invalid input";
+       StockError.style.color = "red";
+       return false;
+  }
+      StockError.innerHTML = "Valid";
+      StockError.style.color = "green";
+      return true;
+    }
+    </script>
+    <script>
+        let croppers = [];
+
+    function previewAndSaveImages(event) {
+    const files = event.target.files;
+    const cropperContainer = document.getElementById('cropper-container');
+    cropperContainer.innerHTML = '';
+    croppers = [];
+
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        const reader = new FileReader();
+
+        reader.onload = function () {
+            const image = new Image();
+            image.src = reader.result;
+
+            image.onload = function () {
+                const cropperDiv = document.createElement('div');
+                cropperContainer.appendChild(cropperDiv);
+                cropperDiv.appendChild(image);
+
+                const cropper = new Cropper(image, {
+                    aspectRatio: 1, // Set aspect ratio as needed
+                    viewMode: 1, // Set view mode as needed
+                    background: false, // Set background as needed
+                    autoCropArea: 1, // Set autoCropArea as needed
+                });
+
+                croppers.push(cropper);
+            };
+        };
+
+        reader.readAsDataURL(file);
+    }
+}
+
+function cropAndUpload() {
+    const croppedImages = [];
+
+    for (let i = 0; i < croppers.length; i++) {
+        const canvas = croppers[i].getCroppedCanvas({
+            width: 243, // Set desired width
+            height: 233, // Set desired height
+        });
+        canvas.toBlob((blob) => {
+            croppedImages.push(blob);
+
+            if (croppedImages.length === croppers.length) {
+                // All images cropped, now upload
+                const formData = new FormData();
+                for (let j = 0; j < croppedImages.length; j++) {
+                    formData.append('croppedImage', croppedImages[j]);
+                }
+
+                // Send formData with cropped images to server using fetch or XMLHttpRequest
+            }
+        });
+    }
+}
+
+   
+</script>
+    
+
+
+//     <script>
+//         function previewAndSaveImages(event) {
+//     const files = event.target.files;
+
+//     const formData = new FormData();
+//     for (let i = 0; i < files.length; i++) {
+//         formData.append('images', files[i]);
+//     }
+
+//     const previewContainer = document.getElementById('image-preview');
+//     previewContainer.innerHTML = ''; // Clear previous previews
+
+//     for (let i = 0; i < files.length; i++) {
+//         const file = files[i];
+//         const reader = new FileReader();
+
+//         reader.onload = function () {
+//             const img = document.createElement('img');
+//             img.src = reader.result;
+//             img.alt = 'Preview';
+//             img.style.maxWidth = '243px';
+//             img.style.maxHeight = '233px';
+//             previewContainer.appendChild(img);
+//         };
+
+//         reader.readAsDataURL(file);
+//     }
+// }        
+ //</script>
+    <script src="/static/adminAssets/js/vendors/jquery-3.6.0.min.js"></script>
+    <script src="/static/adminAssets/js/vendors/bootstrap.bundle.min.js"></script>
+    <script src="/static/adminAssets/js/vendors/select2.min.js"></script>
+    <script src="/static/adminAssets/js/vendors/perfect-scrollbar.js"></script>
+    <script src="/static/adminAssets/js/vendors/jquery.fullscreen.min.js"></script>
+    <!-- Main Script -->
+    <script src="/static/adminAssets/js/main.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" rel="stylesheet">
+
+</body>
+
+</html>
